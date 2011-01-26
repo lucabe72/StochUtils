@@ -7,7 +7,7 @@
 
 struct pmf *gamma_generate(double gamma, unsigned int max, unsigned int step)
 {
-  int i;
+  unsigned int i;
   struct pmf *g;
 
   g = pmf_create(max, 0);
@@ -19,6 +19,7 @@ struct pmf *gamma_generate(double gamma, unsigned int max, unsigned int step)
   return g;
 }
 
+#if 0
 static double mypow(double a, int b)
 {
   double res = 1.0;
@@ -34,6 +35,7 @@ static double mypow(double a, int b)
 
   return res;
 }
+#endif
 
 double compute_sum(const struct pmf *y, double gamma)
 {
@@ -60,13 +62,13 @@ double get_gamma(const struct pmf *y, unsigned int max)
   while (1) {
     double eps;
 
-    printf("Trying gamma: %f %f\n", gamma, pmf_tail(y));
+    //printf("Trying gamma: %f %f\n", gamma, pmf_tail(y));
     if (((int)max > pmf_max(y)) && (pmf_tail(y) > 1e-10)) {
       eps = pow(gamma, max) * pmf_tail(y);
     } else {
       eps = 0;
     }
-printf("Epsilon: %f Sum: %f\n", eps, compute_sum(y, gamma));
+//printf("Epsilon: %f Sum: %f\n", eps, compute_sum(y, gamma));
     if (compute_sum(y, gamma) + eps <= 1.0) {
       return gamma;
     }

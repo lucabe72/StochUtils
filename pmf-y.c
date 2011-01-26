@@ -100,7 +100,6 @@ static int opts_parse(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
   struct pmf *c, *z, *y, *gamma_pmf, *v, *dl;
-  int n, i;
   double gamma;
   uint64_t t1, t2;
   int opt;

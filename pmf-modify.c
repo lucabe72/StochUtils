@@ -3,7 +3,7 @@
 
 struct pmf *pmf_restrict(const struct pmf *p, int max)
 {
-  int i;
+  unsigned int i;
   struct pmf *new;
   double sum;
 
