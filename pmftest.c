@@ -11,6 +11,11 @@ int main(int argc, char *argv[])
   struct pmf *p;
   int n, i;
 
+  if (argc < 2) {
+    fprintf(stderr, "Usage: %s <PMF>\n", argv[0]);
+
+    return -1;
+  }
   f = fopen(argv[1], "r");
   if (!f) {
     perror("FOpen");

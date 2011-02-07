@@ -54,6 +54,11 @@ int main(int argc, char *argv[])
   double avgc, avgz;
   int qmin, qmax, q, qstep;
 
+  if (argc < 3) {
+    fprintf(stderr, "Usage: %s <C PMF> <Z PMF>\n", argv[0]);
+
+    return -1;
+  }
   c = load(argv[1], Nc);
   z = load(argv[2], Nz);
 
