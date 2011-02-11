@@ -6,7 +6,7 @@
 #include "pmf.h"
 #include "pmf-file.h"
 
-#define Nc 30000
+#define Nc 100000
 #define QSTEP 100
 #define N 2
 
