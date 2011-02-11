@@ -7,6 +7,8 @@
 #include "pmf-file.h"
 
 #define Nc 30000
+#define QSTEP 100
+#define N 2
 
 static struct pmf *load(const char *fname, int n)
 {
@@ -45,12 +47,31 @@ static void print(const struct pmf *p, char *v)
   printf("P{%s > %d} = %f\n", v, pmf_max(p), pmf_tail(p));
 }
 
+static const struct pmf *c1_generate(const struct pmf *c, int q)
+{
+  struct pmf *c1;
+  double sum;
+  int i;
+
+  c1 = pmf_create(Nc, 0);
+  sum = 0;
+  for (i = pmf_min(c); i < (pmf_max(c) / q) * q + q; i++) {
+    sum += pmf_get(c, i);
+    if (i % q == 0) {
+      pmf_set(c1, i, sum);
+      sum = 0;
+    }
+  }
+
+  return c1;
+}
+
 int main(int argc, char *argv[])
 {
-  struct pmf *c, *c1;
+  struct pmf *c;
+  const struct pmf *c1;
   double avgc, avgc1;
-  int q, i;
-  double sum;
+  int q;
 
   if (argc < 3) {
     fprintf(stderr, "Usage: %s <q> <c PMF>\n", argv[0]);
@@ -62,16 +83,22 @@ int main(int argc, char *argv[])
 
   print(c, "c");
 
-  c1 = pmf_create(Nc, 0);
-  sum = 0;
-  for (i = pmf_min(c); i < (pmf_max(c) / q) * q + q; i++) {
-    sum += pmf_get(c, i);
-    if (i % q == 0) {
-      pmf_set(c1, i, sum);
-      sum = 0;
-    }
-  }
   avgc = pmf_avg(c);
+  if (q == 0) {
+    q = ((int)avgc / N / QSTEP) * QSTEP;
+    while(1) {
+      c1 = c1_generate(c, q);
+      avgc1 = pmf_avg(c1);
+      if (q > avgc1 / N) {
+        break;
+      }
+      q += QSTEP;
+    }
+    printf("Q=%d\n", q);
+  } else {
+    c1 = c1_generate(c, q);
+  }
+
   avgc1 = pmf_avg(c1);
   print(c1, "c1");
   printf("E[c]=%f\tE[c1]=%f\n", avgc, avgc1);
