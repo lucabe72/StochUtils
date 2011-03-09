@@ -5,7 +5,7 @@
 #include "pmf-file.h"
 #include "pmf-sample.h"
 
-#define N 100
+#define N 100000
 
 static int max = 1000;
 
