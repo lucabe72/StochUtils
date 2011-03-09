@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
   FILE *f;
   struct pmf *p, *res;
   int n, i;
+  const double epsilon =  1e-10;
 
   if (argc < 2) {
     fprintf(stderr, "Usage: %s <PMF>\n", argv[0]);
@@ -66,7 +67,7 @@ int main(int argc, char *argv[])
     return -1;
   }
   for (i = 0; i < pmf_max(p) + 1; i++) {
-    printf("P{x = %d} = %f\n", i, pmf_get(p, i));
+    fprintf(stderr, "P{x = %d} = %f\n", i, pmf_get(p, i));
   }
 
   res = pmf_create(pmf_max(p) + 1, 0);
@@ -79,7 +80,9 @@ int main(int argc, char *argv[])
   }
   pmf_normalise(res);
   for (i = 0; i < pmf_max(res) + 1; i++) {
-    printf("P{x = %d} = %f\n", i, pmf_get(res, i));
+    if (pmf_get(res, i) > epsilon) {
+      printf("%d\t %f\n", i, pmf_get(res, i));
+    }
   }
 
   return 0;
