@@ -18,6 +18,11 @@ double rnd(void)
   return v / (double)RAND_MAX;
 }
 
+void rnd_init(unsigned long int seed)
+{
+  srand(seed);
+}
+
 int pmf_rnd(const struct pmf *c)
 {
   double v;
@@ -48,7 +53,7 @@ int main(int argc, char *argv[])
   if (argc > 2) {
     max = atoi(argv[2]);
     if (argc > 3) {
-      srand(atoi(argv[3]));
+      rnd_init(atoi(argv[3]));
     }
   }
   f = fopen(argv[1], "r");
