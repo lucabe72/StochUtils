@@ -84,7 +84,7 @@ static void	fixsvd(VEC *d, MAT *U, MAT *V)
 	    {	/* inequalities are "backwards" for **decreasing** order */
 		while ( d->ve[++i] > v )
 		    ;
-		while (d->ve[--j] < v )
+		while (j> 0 && d->ve[--j] < v )
 		    ;
 		if ( i >= j )
 		    break;
