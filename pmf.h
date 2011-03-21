@@ -1,3 +1,6 @@
+#ifndef PMF_H
+#define PMF_H
+
 struct pmf {
   double *elems;
   unsigned int size;
@@ -34,3 +37,4 @@ static inline int pmf_min(const struct pmf *d)
 {
   return d->min;
 }
+#endif
