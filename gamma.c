@@ -56,9 +56,10 @@ double compute_sum(const struct pmf *y, double gamma)
 
 double get_gamma(const struct pmf *y, unsigned int max)
 {
-  double gamma;
+  double gamma, mingamma, maxgamma;
+  int cnt = 0;
   
-  gamma = 50;
+  gamma = 2.0; mingamma = 1.0; maxgamma = 2.0; cnt = 0;
   while (1) {
     double eps;
 
@@ -68,10 +69,18 @@ double get_gamma(const struct pmf *y, unsigned int max)
     } else {
       eps = 0;
     }
+printf("G: %f\n", gamma);
 //printf("Epsilon: %f Sum: %f\n", eps, compute_sum(y, gamma));
     if (compute_sum(y, gamma) + eps <= 1.0) {
-      return gamma;
+      mingamma = gamma;
+      gamma = (gamma + maxgamma) / 2;
+      cnt++;
+    } else {
+      maxgamma = gamma;
+      gamma = (gamma + mingamma) / 2;
     }
-    gamma = (1 + 9.0 * gamma) / 10.0;
+    if (cnt == 5) {
+      return mingamma;
+    }
   }
 }
