@@ -43,7 +43,7 @@ double compute_sum(const struct pmf *y, double gamma)
   double sum = 0.0;
 
   for (i = pmf_min(y); i <= pmf_max(y); i++) {
-    sum += pow(gamma, i) * pmf_get(y, i);
+    if (pmf_get(y, i) > 0.0) sum += pow(gamma, i) * pmf_get(y, i);
 #if 0
     if (pmf_get(y, i) > 0) {
       printf("%d: Sum = %f\n", sum);
