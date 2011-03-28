@@ -12,7 +12,7 @@ struct pmf *gamma_generate(double gamma, unsigned int max, unsigned int step)
 
   g = pmf_create(max, 0);
   for (i = 0; i < max; i += step) {
-    pmf_set(g, i, 1.0 - pow(gamma, -i));
+    pmf_set(g, i, 1.0 - pow(gamma, -(double)i));
     //printf("P{w > %d} <= %f\n", i, pow(gamma, -i));
   }
 
