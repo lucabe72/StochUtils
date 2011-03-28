@@ -85,7 +85,7 @@ double pmf_sum(const struct pmf *d, unsigned int i)
   double p;
 
   p = pmf_tail(d);
-  for (; i + d->offset < d->size - d->offset; i++) {
+  for (; i < d->size; i++) {
     p += d->elems[i];
   }
 
