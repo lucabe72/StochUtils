@@ -69,7 +69,6 @@ double get_gamma(const struct pmf *y, unsigned int max)
     } else {
       eps = 0;
     }
-printf("G: %f\n", gamma);
 //printf("Epsilon: %f Sum: %f\n", eps, compute_sum(y, gamma));
     if (compute_sum(y, gamma) + eps <= 1.0) {
       mingamma = gamma;
