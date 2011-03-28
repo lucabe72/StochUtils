@@ -21,16 +21,18 @@ int y_max(unsigned int x_max, unsigned int z_max, unsigned int q)
   return x_max - z_max * q;
 }
 
-struct pmf *compute(const struct pmf *c, const struct pmf *z, int q, int n)
+struct pmf *compute(const struct pmf *c, const struct pmf *z, int q)
 {
   struct pmf *y;
   int zi, yi;
   double sum = 0;
   int ymax = y_max(pmf_max(c), pmf_min(z), q);
+  int dim;
 
-  y = pmf_create(n, n / 2);
+  dim = q * pmf_max(z);
+  y = pmf_create(dim + ymax + 1, dim);
 
-  for (yi = -n / 2; yi <= ymax; yi++) {
+  for (yi = -dim; yi <= ymax; yi++) {
     double py;
     int zmin, zmax;
 

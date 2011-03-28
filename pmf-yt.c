@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
   print(c, Nc, 0, 'c');
 
   t1 = get_time();
-  y = compute(c, z, Q, 20 * Nc);
+  y = compute(c, z, Q);
   gamma = get_gamma(y, T);
   gamma_pmf = gamma_generate(gamma, T, /*T / 1000*/1);
 #if 0
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 
   dl = stochdl_compute(v, Q, P);
   t2 = get_time();
-  print(y, 20 * Nc,  -20 * Nc / 2, 'y');
+  print(y, pmf_max(y) - pmf_min(y) + 1, pmf_min(y), 'y');
   printf("Gamma: %f\n", gamma);
 //  print(gamma_pmf, T, 0, 'g');
   print(v, T, 0, 'v');

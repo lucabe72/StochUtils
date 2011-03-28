@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
     double gamma;
     const double eps = 5e-5;
 
-    y = compute(c, z, q, 20 * Nc);
+    y = compute(c, z, q);
     for (gamma = 1 + 1e-5; gamma < 1 + 50 * eps; gamma += eps) {
       printf("Q: %d\t Gamma: %f \t sum: %f\n", q, gamma, compute_sum(y, gamma));
     }
