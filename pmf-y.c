@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
   print(y, 20 * Nc,  -20 * Nc / 2, 'y');
   //pmf_set_samples(p, 1000000);
 #endif
-  v = v_compute(gamma_pmf, c, T, Q / 10);
+  v = v_compute(gamma_pmf, c, T, /*Q / 10*/Q);
 
   dl = stochdl_compute(v, Q, P);
   t2 = get_time();
@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
   printf("Gamma: %f\n", gamma);
 //  print(gamma_pmf, T, 0, 'g');
   print(v, T, 0, 'v');
-  print(dl, T / Q * P, 0, 'd');
+  print(dl, pmf_max(v) / Q * P, 0, 'd');
   printf("Ctime: %Lu\n", t2 - t1);
   printf("Ctime: %Lu %Lu\n", t3 - t1, t2 - t3);
 
