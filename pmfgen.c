@@ -8,6 +8,7 @@ static int offs = 100;
 static int size = 500;
 static int samples = 10000;
 static int verbose;
+static int seed;
 
 static void pmf_rnd(struct pmf *p, int offs, int size, int samples)
 {
@@ -33,7 +34,7 @@ static int opts_parse(int argc, char *argv[])
 {
   int opt;
 
-  while ((opt = getopt(argc, argv, "o:s:S:v")) != -1) {
+  while ((opt = getopt(argc, argv, "o:s:S:r:v")) != -1) {
     switch (opt) {
       case 'o':
         offs = atoi(optarg);
@@ -43,6 +44,9 @@ static int opts_parse(int argc, char *argv[])
         break;
       case 'S':
         samples = atoi(optarg);
+        break;
+      case 'r':
+        seed = atoi(optarg);
         break;
       case 'v':
         verbose = 1;
@@ -63,6 +67,9 @@ int main(int argc, char *argv[])
   int i;
 
   opts_parse(argc, argv);
+  if (seed) {
+    srand(seed);
+  }
   p = pmf_create(size + offs, 0);
   pmf_rnd(p, offs, size, samples);
 
@@ -75,7 +82,7 @@ int main(int argc, char *argv[])
     if (verbose) {
       printf("P{x = %d} = %f\n", i, pmf_get(p, i));
     } else {
-      printf("%d\t%f\n", i, pmf_get(p, i));
+      printf("%d\t%14.15f\n", i, pmf_get(p, i));
     }
   }
   if (verbose) {
