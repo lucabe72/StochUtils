@@ -7,6 +7,7 @@
 static int offs = 100;
 static int size = 500;
 static int samples = 10000;
+static int verbose;
 
 static void pmf_rnd(struct pmf *p, int offs, int size, int samples)
 {
@@ -32,7 +33,7 @@ static int opts_parse(int argc, char *argv[])
 {
   int opt;
 
-  while ((opt = getopt(argc, argv, "o:s:S:")) != -1) {
+  while ((opt = getopt(argc, argv, "o:s:S:v")) != -1) {
     switch (opt) {
       case 'o':
         offs = atoi(optarg);
@@ -42,6 +43,9 @@ static int opts_parse(int argc, char *argv[])
         break;
       case 'S':
         samples = atoi(optarg);
+        break;
+      case 'v':
+        verbose = 1;
         break;
       default: /* ’?’ */
         fprintf(stderr, "Wrong parameter %c\n", opt);
@@ -67,10 +71,16 @@ int main(int argc, char *argv[])
 
     return -1;
   }
-  for (i = 0; i < pmf_max(p); i++) {
-    printf("P{x = %d} = %f\n", i, pmf_get(p, i));
+  for (i = 0; i <= pmf_max(p); i++) {
+    if (verbose) {
+      printf("P{x = %d} = %f\n", i, pmf_get(p, i));
+    } else {
+      printf("%d\t%f\n", i, pmf_get(p, i));
+    }
   }
-  printf("P{x >= %d} = %f\n", pmf_max(p), pmf_tail(p));
+  if (verbose) {
+    printf("P{x >= %d} = %f\n", pmf_max(p), pmf_tail(p));
+  }
 
   return 0;
 }
