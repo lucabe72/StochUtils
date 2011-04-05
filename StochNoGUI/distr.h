@@ -1,6 +1,8 @@
 #ifndef __DISTRIB__
 #define __DISTRIB__
 
+#define PMF_SIZE 2000
+
 struct distribution {
   struct distribution *next;
   struct sys_distr *group;

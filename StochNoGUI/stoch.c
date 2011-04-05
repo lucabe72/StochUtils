@@ -63,10 +63,10 @@ int main(int argc, char *argv[])
     return -1;
   }
 printf("Loading C %s\n", argv[opt]);
-  c = pdf_load(argv[opt], 2000);
+  c = pdf_load(argv[opt], PMF_SIZE);
   if (p <= 0) {
 printf("Loading T %s\n", argv[opt + 1]);
-    t = pdf_load(argv[opt + 1], 2000);
+    t = pdf_load(argv[opt + 1], PMF_SIZE);
   }
   t1 = get_time();
   if (p > 0) {
@@ -81,10 +81,10 @@ printf("Loading T %s\n", argv[opt + 1]);
     return -1;
   }
 
-  dl = dl_generate(m, 2000, qs, ts);
+  dl = dl_generate(m, PMF_SIZE, qs, ts);
   t2 = get_time();
   sum = 0;
-  for (i = 0; i <= (2000 / qs + 1) * ts; i++) {
+  for (i = 0; i <= (PMF_SIZE / qs + 1) * ts; i++) {
     sum += dl[i];
     if (dl[i] > 0) {
       printf("P{d = %d} = %f | %f\n", i, dl[i], sum);

@@ -14,7 +14,7 @@ double *matrix_generate_pseudo(struct distribution *exec, int period, int qs, in
   int q1;
 
   q1 = qs * (period / ts);
-  matrix = pseudo_generate(exec, q1, 2000);
+  matrix = pseudo_generate(exec, q1, PMF_SIZE);
 
   return matrix;
 }
@@ -25,13 +25,13 @@ double *matrix_generate_generic(struct distribution *exec, struct distribution *
   double *v;
 
 fprintf(stderr, "Transofrming\n");
-  v = generic_transform(interarrival, ts, 2000);
+  v = generic_transform(interarrival, ts, PMF_SIZE);
   if (v == NULL) {
     fprintf(stderr, "Failed to transform the interarrival vector...\n");
     return NULL;
   }
 fprintf(stderr, "Generating\n");
-  matrix = generic_generate(exec, v, qs, 2000);
+  matrix = generic_generate(exec, v, qs, PMF_SIZE);
 
   if (matrix == NULL) {
     fprintf(stderr, "Matrix generation failed\n");
