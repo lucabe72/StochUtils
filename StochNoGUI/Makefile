@@ -5,7 +5,7 @@ endif
 LDLIBS = -lm
 
 PROGRAM = stoch
-OBJS = load.o distribs.o driver.o pseudo.o generic.o
+OBJS = load.o driver.o pseudo.o generic.o
 
 all: $(PROGRAM)
 

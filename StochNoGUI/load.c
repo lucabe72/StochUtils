@@ -73,11 +73,6 @@ printf("%d %f\n", n, v);
   }
 
   d->values = values;
-  d->name = malloc(strlen(name) + 1);
-  if (d->name != NULL) {
-    strcpy(d->name, name);
-  }
-
 
   if (sum != 1.0) {
     printf("Sum: %f != 1!!!\n", sum);
@@ -86,7 +81,6 @@ printf("%d %f\n", n, v);
     */
   }
 
-  d->window = NULL;
 /*
   for (n = 0; n < 20; n++) {
     printf("V[%d]: %f\n", n, values[n]);
