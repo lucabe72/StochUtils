@@ -5,7 +5,7 @@
 #include <math.h>
 #include "meschac/matrix2.h"
 
-
+//Fixed interarrival
 double matrix_prob(int i, int j, int n, int q, struct pmf *p)
 {
     if (j == 0) {
@@ -27,55 +27,46 @@ double matrix_prob2(int i, int j, int q, struct pmf *p, struct pmf *u)
 {
     int n=0,k=0;
     double prob=0;
-//    printf("(%i,%i),%i,%i=",i,j,q,pmf_max(u));
     if (j == 0) {
-	/*if (pmf_max(p) < ((pmf_max(u) - i) * q))
-	    return 1;*/
-	//if (n - i > 0){
 	for (k = 0; k < u->size; k++) {
 	  n=(k - u->offset);
-//	printf("size: %i, k=%i,off=%i n=%i\n",u->size,k,u->offset,n);
 	  prob +=  u->elems[k]*cdf_get(p, (n - i) * q);
 	  }
-
-	    /*for (n=i; n<pmf_max(u); n++)
-	      prob+=pmf_get(u,n)*cdf_get(p, (n - i) * q);*/
-//	    printf("%f\n",prob);
 	    return prob;
-	/*    }
-	else
-	    return 0;*/
     } else if (i == j){
 	for (k = 0; k < u->size; k++) {
 	  n=(k - u->offset);
-//	printf("size: %i, k=%i,off=%i n=%i\n",u->size,k,u->offset,n);
 	  prob +=  u->elems[k]*(cdf_get(p, n * q) - cdf_get(p, (n - 1) * q));
 	}
-
-        /*for (n=i; n<pmf_max(u); n++)
-	   prob+=pmf_get(u,n)*(cdf_get(p, n * q) - cdf_get(p, (n - 1) * q));*/
-//	    printf("%f\n",prob);
 	return prob;
 	}
     else
     {
     for (k = 0; k < u->size; k++) {
     	n=(k - u->offset);
-//	printf("size: %i, k=%i,off=%i n=%i\n",u->size,k,u->offset,n);
         prob +=  u->elems[k]*(cdf_get(p, (n + j - i) * q) - cdf_get(p,(n + j - i - 1) * q)) ;
 	  }
-
-    	/*for (n=i; n<pmf_max(u); n++)
-	   prob+=pmf_get(u,n)*(cdf_get(p, (n + j - i) * q) - cdf_get(p,(n + j - i - 1) * q));
-    	for (n=i; n<pmf_max(u); n++)
-	   prob+=pmf_get(u,n)*(cdf_get(p, (n + j - i) * q) - cdf_get(p,(n + j - i - 1) * q));*/
-//	    printf("%f\n",prob);
     	return prob;
     }
 }
 
 
+//Complete model
+double matrix_prob3(int i, int j, int q, int t, struct pmf *p, struct pmf *u)
+{
+    int n=0,k=0;
+    double prob=0;
+    for (k = 0; k < u->size; k++) {
+        n=(k - u->offset);
+	//printf("%i %i \n",n + j - i ,n + j - i - 1);
+	if (j > 0)
+	   prob +=  u->elems[k]*(cdf_get(p, (n + j - i) * q) - cdf_get(p,(n + j - i - 1) * q)) ;
+	else
+	   prob +=  u->elems[k]*(cdf_get(p, (n - i) * q)) ;
+    }
+    return prob;
 
+}
 
 void compute_matrixes(MAT * mat, int dim, MAT * B, MAT * A0,
 		      MAT * A1, MAT * A2)
@@ -199,8 +190,10 @@ VEC *computeX0(MAT * R, MAT * B0, MAT * A2, VEC * v)
     pi = pinv(M, pi);
     //togheter
     res5 = m_mlt(res4, pi, res5);
+
     //compute x0
     v = mv_move(res5, 0, 0, res5->m, res5->n, v, 0);
+
     m_free(eye);
     m_free(res);
     m_free(res1);
