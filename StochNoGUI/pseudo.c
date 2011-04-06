@@ -1,11 +1,15 @@
 #include <stdlib.h>
 #include <stdio.h>
+
+#include "pmf.h"
+
 #include "distr.h"
 
-double *pseudo_generate(struct distribution *d, int q, int n)
+double *pseudo_generate(struct pmf *d, int q)
 {
   int j, i;
   double *mat;
+  int n = d->size;
 
   mat = malloc(sizeof(double) * n * n);
   if (mat == 0) {
@@ -17,11 +21,11 @@ double *pseudo_generate(struct distribution *d, int q, int n)
     for (j = 0; j < n; j++) {
       if (j <= q) {
 /*        m[i][j] = d->values[i]; */
-        *(mat + i * n + j) = d->values[i];
+        *(mat + i * n + j) = d->elems[i];
       } else {
         if (i + q - j > 0) {
 /*          m[i][j] = d->values[i + q - j]; */
-          *(mat + i * n + j) = d->values[i + q - j];
+          *(mat + i * n + j) = d->elems[i + q - j];
         } else {
 /*          m[i][j] = 0; */
           *(mat + i * n + j) = 0;

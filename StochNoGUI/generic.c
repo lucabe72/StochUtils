@@ -1,16 +1,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "pmf.h"
+
 #include "distr.h"
 #include "compute.h"
 
 #define STEP 10
-double *generic_transform(struct distribution *d_t, int period, int n)
+double *generic_transform(struct pmf *d_t, int period)
 {
   double *v, *v1;
   int j, j1, th;
+  int n = d_t->size;
 
-  v = d_t->values;
+  v = d_t->elems;
   v1 = malloc(sizeof(double) * n);
   if (v == NULL) {
     fprintf(stderr, "Error Allocating the temporary vector...\n");
@@ -41,13 +44,12 @@ double *generic_transform(struct distribution *d_t, int period, int n)
   return v1;
 }
 
-double *generic_generate(struct distribution *d_c, double *v, int q, int n)
+double *generic_generate(struct pmf *d_c, double *v, int q)
 {
   int j, i, xx;
   double *mat;
-  double *u;
-
-  u = d_c->values;
+  double *u = d_c->elems;
+  int n = d_c->size;
 
   mat = malloc(sizeof(double) * n * n);
   if (mat == NULL) {
