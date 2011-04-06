@@ -8,7 +8,7 @@
 
 #include "driver.h"
 
-#define PMF_SIZE 1000
+static int pmf_size = 1000;
 
 static int qs = 10000;
 static int ts = 20000;
@@ -85,10 +85,10 @@ int main(int argc, char *argv[])
     return -1;
   }
 printf("Loading C %s\n", argv[opt]);
-  c = pdf_load(argv[opt], PMF_SIZE);
+  c = pdf_load(argv[opt], pmf_size);
   if (p <= 0) {
 printf("Loading T %s\n", argv[opt + 1]);
-    t = pdf_load(argv[opt + 1], PMF_SIZE);
+    t = pdf_load(argv[opt + 1], pmf_size);
   }
   t1 = get_time();
   if (p > 0) {
@@ -103,10 +103,10 @@ printf("Loading T %s\n", argv[opt + 1]);
     return -1;
   }
 
-  dl = dl_generate(m, PMF_SIZE, qs, ts);
+  dl = dl_generate(m, pmf_size, qs, ts);
   t2 = get_time();
   sum = 0;
-  for (i = 0; i <= (PMF_SIZE / qs + 1) * ts; i++) {
+  for (i = 0; i <= (pmf_size / qs + 1) * ts; i++) {
     sum += dl[i];
     if (dl[i] > 0) {
       printf("P{d = %d} = %f | %f\n", i, dl[i], sum);
