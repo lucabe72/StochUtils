@@ -53,9 +53,6 @@ double *dl_generate(double *matrix, int size, int qs, int ts)
 
 fprintf(stderr, "Solving\n");
   sol = solve(matrix, size, ITERATIONS);
-  /*
-  sol = create_compute_window(matrix, size, ITERATIONS);
-  */
   if (sol == NULL) {
     fprintf(stderr, "Unable to solve the eigenvector problem!!!\n");
     free(matrix);
