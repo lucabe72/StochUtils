@@ -13,7 +13,7 @@
 #include "meschac/matrix.h"
 
 #define Nc 30000
-#define Nz 30000
+#define Nz 20
 
 static int Q = 10000;
 static int P = 20000;
