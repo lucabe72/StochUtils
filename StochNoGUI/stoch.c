@@ -3,13 +3,34 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#include "pmf.h"
+#include "pmf-file.h"
+
 #include "distr.h"
-#include "compute.h"
-#include "load.h"
+#include "driver.h"
 
 static int qs = 10000;
 static int ts = 20000;
 static int p = -1;
+
+
+struct pmf *pdf_load(const char *name, int size)
+{
+  struct pmf *p;
+  FILE *f;
+
+  f = fopen(name, "r");
+  if (!f) {
+    perror("FOpen");
+
+    return NULL;
+  }
+
+  p = pmf_create(size, 0);
+  pmf_read(p, f);
+
+  return p;
+}
 
 static inline uint64_t get_time(void)
 {
@@ -50,7 +71,7 @@ static int opts_parse(int argc, char *argv[])
 
 int main(int argc, char *argv[])
 {
-  struct distribution *c, *t;
+  struct pmf *c, *t;
   int i;
   double *m, *dl, sum;
   int opt;

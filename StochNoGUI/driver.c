@@ -3,35 +3,53 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "pmf.h"
+
 #include "distr.h"
 #include "compute.h"
+#include "driver.h"
 
 #define ITERATIONS 500
 
-double *matrix_generate_pseudo(struct distribution *exec, int period, int qs, int ts)
+struct distribution *pmf2distr(struct pmf *p)
+{
+  struct distribution *d;
+
+  d = malloc(sizeof(struct distribution));
+  d->values = p->elems;
+
+  return d;
+}
+
+double *matrix_generate_pseudo(struct pmf *exec, int period, int qs, int ts)
 {
   double *matrix;
   int q1;
+  struct distribution *e1;
 
+  e1 = pmf2distr(exec);
   q1 = qs * (period / ts);
-  matrix = pseudo_generate(exec, q1, PMF_SIZE);
+  matrix = pseudo_generate(e1, q1, PMF_SIZE);
 
   return matrix;
 }
 
-double *matrix_generate_generic(struct distribution *exec, struct distribution *interarrival, int qs, int ts)
+double *matrix_generate_generic(struct pmf *exec, struct pmf *interarrival, int qs, int ts)
 {
   double *matrix;
   double *v;
+  struct distribution *e1, *i1;
 
+  e1 = pmf2distr(exec);
+  i1 = pmf2distr(interarrival);
 fprintf(stderr, "Transofrming\n");
-  v = generic_transform(interarrival, ts, PMF_SIZE);
+  v = generic_transform(i1, ts, PMF_SIZE);
   if (v == NULL) {
     fprintf(stderr, "Failed to transform the interarrival vector...\n");
     return NULL;
   }
 fprintf(stderr, "Generating\n");
-  matrix = generic_generate(exec, v, qs, PMF_SIZE);
+  matrix = generic_generate(e1, v, qs, PMF_SIZE);
 
   if (matrix == NULL) {
     fprintf(stderr, "Matrix generation failed\n");

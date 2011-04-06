@@ -1,3 +1,4 @@
+CPPFLAGS = -I..
 CFLAGS += -Wall -Wextra -g -O8
 ifdef DEBUG
 LDFLAGS += -lefence
@@ -5,7 +6,7 @@ endif
 LDLIBS = -lm
 
 PROGRAM = stoch
-OBJS = load.o driver.o pseudo.o generic.o
+OBJS = ../pmf.o ../pmf-file.o driver.o pseudo.o generic.o
 
 all: $(PROGRAM)
 
