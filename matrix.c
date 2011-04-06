@@ -16,10 +16,7 @@
 #define Nz 20
 
 static int Q = 10000;
-static int P = 20000;
-static int T = 70000;
-static int samples;
-
+static int T = 20000;
 
 //#define DEBUG 1
 
@@ -65,19 +62,13 @@ static int opts_parse(int argc, char *argv[])
 {
   int opt;
 
-    while ((opt = getopt(argc, argv, "t:q:T:s:")) != -1) {
+    while ((opt = getopt(argc, argv, "t:q:")) != -1) {
       switch (opt) {
         case 'q':
           Q = atoi(optarg);
 	  break;
 	case 't':
-	  P = atoi(optarg);
-	  break;
-	case 'T':
 	  T = atoi(optarg);
-	  break;
-	case 's':
-	  samples = atoi(optarg);
 	  break;
 	default: /* ?~@~Y??~@~Y */
 	  fprintf(stderr, "Usage: %s [-t nsecs] [-n] name\n", argv[0]);
