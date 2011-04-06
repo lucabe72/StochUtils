@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "pmf.h"
+#include "compute.h"
 
 double *pseudo_generate(struct pmf *d, int q)
 {
