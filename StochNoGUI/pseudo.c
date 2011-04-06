@@ -3,8 +3,6 @@
 
 #include "pmf.h"
 
-#include "distr.h"
-
 double *pseudo_generate(struct pmf *d, int q)
 {
   int j, i;

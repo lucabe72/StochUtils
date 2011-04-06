@@ -5,7 +5,6 @@
 
 #include "pmf.h"
 
-#include "distr.h"
 #include "compute.h"
 #include "driver.h"
 

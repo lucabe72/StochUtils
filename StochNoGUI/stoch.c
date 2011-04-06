@@ -6,8 +6,9 @@
 #include "pmf.h"
 #include "pmf-file.h"
 
-#include "distr.h"
 #include "driver.h"
+
+#define PMF_SIZE 1000
 
 static int qs = 10000;
 static int ts = 20000;

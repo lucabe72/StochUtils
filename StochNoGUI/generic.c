@@ -3,7 +3,6 @@
 
 #include "pmf.h"
 
-#include "distr.h"
 #include "compute.h"
 
 #define STEP 10
