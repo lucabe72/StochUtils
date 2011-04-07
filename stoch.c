@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
   }
   c = pdf_load(argv[opt], pmf_size);
   if (p <= 0) {
-    t = pdf_load(argv[opt + 1], pmf_size);
+    t = pdf_load(argv[opt + 1], pmf_size * ts);
   }
   t1 = get_time();
   if (p > 0) {
