@@ -41,7 +41,7 @@ double *solve(double *mat, int n, int iter)
 {
   int k;
   int i, j;
-  double *w, old, s, *sum;
+  double *w, s, *sum;
 
   w = malloc(sizeof(double) * n);
   if (w == 0) {
@@ -61,11 +61,9 @@ double *solve(double *mat, int n, int iter)
   }
 
   k = 0;
-  old = 1000;
   s = 0;
   while(k < iter) {
     k++;
-    old = w[0];
     s = 0;
     for (i = 0; i < n; i++) {
       sum[i] = 0;

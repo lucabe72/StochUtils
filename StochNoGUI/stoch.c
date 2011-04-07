@@ -85,10 +85,8 @@ int main(int argc, char *argv[])
 
     return -1;
   }
-printf("Loading C %s\n", argv[opt]);
   c = pdf_load(argv[opt], pmf_size);
   if (p <= 0) {
-printf("Loading T %s\n", argv[opt + 1]);
     t = pdf_load(argv[opt + 1], pmf_size);
   }
   t1 = get_time();
