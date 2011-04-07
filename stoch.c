@@ -50,7 +50,7 @@ static int opts_parse(int argc, char *argv[])
 {
   int opt;
 
-  while ((opt = getopt(argc, argv, "t:q:p:")) != -1) {
+  while ((opt = getopt(argc, argv, "t:q:p:T:")) != -1) {
     switch (opt) {
       case 'q':
         qs = atoi(optarg);
@@ -60,6 +60,9 @@ static int opts_parse(int argc, char *argv[])
         break;
       case 'p':
         p = atoi(optarg);
+        break;
+      case 'T':
+        pmf_size = atoi(optarg);
         break;
       default: /* ’?’ */
         fprintf(stderr, "Usage: %s [-t nsecs] [-n] name\n", argv[0]);
