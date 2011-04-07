@@ -3,7 +3,7 @@
 
 #include "pmf.h"
 
-#include "compute.h"
+#include "generic.h"
 
 #define STEP 10
 double *generic_transform(struct pmf *d_t, int period)

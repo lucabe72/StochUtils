@@ -5,7 +5,8 @@
 
 #include "pmf.h"
 
-#include "compute.h"
+#include "pseudo.h"
+#include "generic.h"
 #include "driver.h"
 
 #define ITERATIONS 500
