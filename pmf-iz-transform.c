@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
   }
   z = generic_transform(t, ts);
   for (i = 0; i < N; i++) {
-    printf("%d %f\n", i, z[i]);
+    printf("%d %14.15f\n", i, z[i]);
   }
 
   return 0;
