@@ -25,46 +25,85 @@ double matrix_prob(int i, int j, int n, int q, struct pmf *p)
 
 double matrix_prob2(int i, int j, int q, struct pmf *p, struct pmf *u)
 {
-    int n=0,k=0;
-    double prob=0;
+    int n = 0, k = 0;
+    double prob = 0;
     if (j == 0) {
 	for (k = 0; k < u->size; k++) {
-	  n=(k - u->offset);
-	  prob +=  u->elems[k]*cdf_get(p, (n - i) * q);
-	  }
-	    return prob;
-    } else if (i == j){
-	for (k = 0; k < u->size; k++) {
-	  n=(k - u->offset);
-	  prob +=  u->elems[k]*(cdf_get(p, n * q) - cdf_get(p, (n - 1) * q));
+	    n = (k - u->offset);
+	    prob += u->elems[k] * cdf_get(p, (n - i) * q);
 	}
 	return prob;
+    } else if (i == j) {
+	for (k = 0; k < u->size; k++) {
+	    n = (k - u->offset);
+	    prob +=
+		u->elems[k] * (cdf_get(p, n * q) -
+			       cdf_get(p, (n - 1) * q));
 	}
-    else
-    {
-    for (k = 0; k < u->size; k++) {
-    	n=(k - u->offset);
-        prob +=  u->elems[k]*(cdf_get(p, (n + j - i) * q) - cdf_get(p,(n + j - i - 1) * q)) ;
-	  }
-    	return prob;
+	return prob;
+    } else {
+	for (k = 0; k < u->size; k++) {
+	    n = (k - u->offset);
+	    prob +=
+		u->elems[k] * (cdf_get(p, (n + j - i) * q) -
+			       cdf_get(p, (n + j - i - 1) * q));
+	}
+	return prob;
     }
 }
 
 
 //Complete model
-double matrix_prob3(int i, int j, int q, int t, struct pmf *p, struct pmf *u)
+double matrix_prob3(int i, int j, int q, int t, struct pmf *p,
+		    struct pmf *u)
 {
-    int n=0,k=0;
-    double prob=0;
-    for (k = 0; k < u->size; k++) {
-        n=(k - u->offset);
-	//printf("%i %i \n",n + j - i ,n + j - i - 1);
-	if (j > 0)
-	   prob +=  u->elems[k]*(cdf_get(p, (n + j - i) * q) - cdf_get(p,(n + j - i - 1) * q)) ;
-	else
-	   prob +=  u->elems[k]*(cdf_get(p, (n - i) * q)) ;
+    int n = 0, k = 0;
+    double prob = 0, pv;
+    /*if ((i==0)&&(j==0)){
+       //ok
+       prob=cdf_get(p,q);
+       }
+       else *//*if ((i==0)&&(j>0)){
+       //ok
+       prob=cdf_get(p,q*(j+1))-cdf_get(p,(j)*q);
+       }
+       else *//*  if (i==0)
+       //{
+       //seems to be ok
+       for (k = 0; k < u->size; k++) {
+       n=(k - u->offset);
+       pv=u->elems[k];
+       if (pv > 0)
+       {
+       printf("(%i,%i),n=%i prob=%f\n",i,j,n,pv);
+       if (i>=n){ */
+    //         prob += (cdf_get(p,(j+1) * q)-cdf_get(p,(j) * q));
+    /* }
+       else {
+       prob +=  pv*(cdf_get(p, q)) ;
+       }
+       }
+       }
+       }
+       else */  {
+	for (k = 0; k < u->size; k++) {
+	    n = (k - u->offset);
+	    pv = u->elems[k];
+	    if (i >= n) {
+		prob +=
+		    pv *
+		    ((cdf_get(p, (n - i + j) * q) -
+		      cdf_get(p, (n - i + j - 1) * q)));
+	    } else {
+		prob +=
+		    pv *
+		    ((cdf_get(p, (j + 1) * q) - (cdf_get(p, (j) * q))));
+	    }
+	}
     }
     return prob;
+
+
 
 }
 

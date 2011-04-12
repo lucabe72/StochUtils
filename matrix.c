@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <math.h>
+#include <time.h>
+#include <sys/time.h>
 
 #include "pmf.h"
 #include "pmf-file.h"
@@ -19,6 +21,20 @@ static int Q = 10000;
 static int T = 20000;
 
 //#define DEBUG 1
+
+static inline uint64_t get_time(void)
+{
+  struct timeval tv;
+  uint64_t res;
+
+  gettimeofday(&tv, NULL);
+  res = tv.tv_sec;
+  res = res * 1000000 + tv.tv_usec;
+
+  return res;
+}
+
+
 
 static struct pmf *load(const char *fname, int n)
 {
@@ -87,6 +103,7 @@ int main(int argc, char *argv[])
   double avgc;
   int n,maxv,i,j;
   int qmin, qmax, qstep,t,forward,back;
+  uint64_t t1, t2, t3;
   MAT *mat,*B0,*A0,*A1,*A2,*R;
   VEC *X0;
 #ifdef DEBUG
@@ -122,11 +139,11 @@ int main(int argc, char *argv[])
   back=-1*(ceil((1.0*pmf_min(c))/(1.0*Q))-pmf_max(u));
 
   //2. compute maxvalue
-  maxv=max(forward,back);
+  maxv=max(forward,back)+1;
   if (maxv<=0) maxv=1;
 
   mat=m_get(maxv*3,maxv*3);
-
+  t1=get_time();
   //3. compute matrix
   for (i=0; i<maxv*3; i++){
      for (j=0; j<maxv*3; j++){
@@ -167,12 +184,14 @@ int main(int argc, char *argv[])
   //5. Compute matrix R
   R=m_get(maxv,maxv);
   R=computeR(R,A0,A1,A2,0.001);
+  t2=get_time();
 #ifdef DEBUG
   m_output(R);
 #endif
   //6. Compute X0 from R
   X0=v_get(maxv);
   X0=computeX0(R,B0,A2,X0);
+  t3=get_time();
  #ifdef DEBUG
   v_output(X0);
   printf("PROB %f\n",v_sum(X0));
