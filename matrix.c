@@ -135,11 +135,12 @@ int main(int argc, char *argv[])
   //1. compute cdf of U
   cdfc=cdf_pmf(c);
 
-  forward=ceil((1.0*pmf_max(c))/(1.0*Q))-pmf_min(u);
-  back=-1*(ceil((1.0*pmf_min(c))/(1.0*Q))-pmf_max(u));
+  forward=ceil((1.0*pmf_max(c))/(1.0*Q));
+  back=-1*ceil((1.0*pmf_min(c))/(1.0*Q));
 
   //2. compute maxvalue
-  maxv=max(forward,back)+1;
+  maxv=max(forward,back);
+
   if (maxv<=0) maxv=1;
 
   mat=m_get(maxv*3,maxv*3);
