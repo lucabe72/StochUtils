@@ -97,6 +97,7 @@ int main(int argc, char *argv[])
     printf("Q=%d\n", q);
   } else {
     c1 = c1_generate(c, q);
+    print(c1, "c1");
   }
 
   avgc1 = pmf_avg(c1);
