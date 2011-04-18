@@ -55,7 +55,7 @@ static const struct pmf *c1_generate(const struct pmf *c, int q)
 
   c1 = pmf_create(Nc, 0);
   sum = 0;
-  for (i = pmf_min(c); i < (pmf_max(c) / q) * q + q; i++) {
+  for (i = pmf_min(c); i <= (pmf_max(c) / q) * q + q; i++) {
     sum += pmf_get(c, i);
     if (i % q == 0) {
       pmf_set(c1, i, sum);
