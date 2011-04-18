@@ -1,6 +1,5 @@
 #ifndef CDF_H
 #define CDF_H
-#include "pmf.h"
 
 struct pmf *cdf_pmf(struct pmf *);
 
