@@ -212,5 +212,9 @@ int main(int argc, char *argv[])
   m_free(mat);
   m_free(R);
   v_free(X0);
+
+  printf("Ctime: %Lu\n", t3 - t1);
+  printf("Ctime: %Lu %Lu\n", t2 - t1, t3 - t2);
+
   return 0;
 }
