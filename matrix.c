@@ -100,7 +100,7 @@ static int opts_parse(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
   struct pmf *c, *cdfc, *u;
-  double avgc;
+  double avgc, sum = 0;
   int n,maxv,i,j;
   int qmin, qmax, qstep,t,forward,back;
   uint64_t t1, t2, t3;
@@ -198,8 +198,11 @@ int main(int argc, char *argv[])
   printf("PROB %f\n",v_sum(X0));
 #endif
 
-  for (i=1; i<=maxv; i++)
-	printf("P{r = %i} %f\n",T*i,v_get_val(X0,i-1));
+  for (i=1; i<=maxv; i++) {
+	sum += v_get_val(X0,i-1);
+	printf("P{r = %i} %f | %f\n",T*i,v_get_val(X0,i-1), sum);
+  }
+
   if (v_sum(X0)!=1)
 	printf("P{r >= %i} %f\n",T*i,1-v_sum(X0));
 
