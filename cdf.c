@@ -1,7 +1,7 @@
 #include "pmf.h"
 #include "cdf.h"
 
-struct pmf *cdf_pmf(struct pmf *p)
+struct pmf *pmf2cdf(struct pmf *p)
 {
   struct pmf *res;
   double sum = 0;

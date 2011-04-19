@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
   t=atoi(argv[4]);
 
   //1. compute cdf of U
-  cdfc=cdf_pmf(c);
+  cdfc=pmf2cdf(c);
 
   forward=ceil((1.0*pmf_max(c))/(1.0*Q));
   back=-1*ceil((1.0*pmf_min(c))/(1.0*Q));
