@@ -60,12 +60,12 @@ fprintf(stderr, "Solving\n");
     return NULL;
   }
 
-  values1 = malloc((ceil((double)size / qs) * ts + 1) * sizeof(double));
+  values1 = malloc((ceil((double)size / qs + 1) * ts) * sizeof(double));
   if (values1 != NULL) {
     int dd;
     int i;
 
-    memset(values1, 0, (ceil((double)size / qs) * ts + 1) * sizeof(double));
+    memset(values1, 0, (ceil((double)size / qs + 1) * ts) * sizeof(double));
     for (i = 0; i < size; i++) {
       dd = ceil((double)i / qs) * ts;
       values1[dd] += sol[i];
