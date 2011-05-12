@@ -20,3 +20,16 @@ struct pmf *pmf_restrict(const struct pmf *p, int max)
 
   return new;
 }
+
+void pmf_shift(struct pmf *p, int start)
+{
+  int i;
+  if (pmf_min(p) > start) {
+
+  } else {
+    for (i = pmf_max(p); i > 0; i--)
+      pmf_set(p, i + start - pmf_min(p), pmf_get(p, i));
+    for (i = 0; i <= start; i++)
+      pmf_set(p, i, 0.0);
+  }
+}
