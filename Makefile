@@ -10,7 +10,7 @@ pmf-y: pmf-y.o pmf.o pmf-file.o gamma.o y.o v.o pmf-modify.o dl.o
 pmf-yt: pmf-yt.o pmf.o pmf-file.o gamma.o z.o y.o v.o pmf-modify.o dl.o
 pmf-rnd: pmf-rnd.o pmf.o pmf-file.o pmf-sample.o
 matrix: matrix.o pmf.o pmf-file.o cdf.o qbdm.o meschac/meschach.a
-pmfgen: pmfgen.o pmf.o pmf-sample.o -lgsl
+pmfgen: pmfgen.o pmf.o pmf-sample.o pmf-modify.o -lgsl
 stoch: stoch.o pmf.o pmf-file.o driver.o pseudo.o generic.o
 pmf-iz-transform: pmf-iz-transform.o pmf.o pmf-file.o generic.o
 

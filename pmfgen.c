@@ -6,6 +6,7 @@
 
 #include "pmf.h"
 #include "pmf-sample.h"
+#include "pmf-modify.h"
 
 #define RANDOM		0
 #define UNIFORM		1
