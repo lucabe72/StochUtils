@@ -144,7 +144,7 @@ static double gen_number(int value, int distro, va_list ap)
   return val;
 }
 
-static void pmf_gen(struct pmf *p, int offs, int samples, int distro, ...)
+static void pmf_gen(struct pmf *p, int offs, int distro, ...)
 {
   int i;
   double val;
@@ -214,7 +214,7 @@ int main(int argc, char *argv[])
     srand(seed);
   }
   p = pmf_create(size + offs, 0);
-  pmf_gen(p, offs, samples, distro, par1, par2, NULL);
+  pmf_gen(p, offs, distro, par1, par2, NULL);
   if (pmf_check(p)) {
     printf("Bad PMF: %d | %f!!!\n", pmf_check(p), pmf_sum(p, 0));
 
