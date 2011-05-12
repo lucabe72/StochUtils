@@ -54,58 +54,76 @@ double matrix_prob2(int i, int j, int q, struct pmf *p, struct pmf *u)
 
 
 //Complete model
-double matrix_prob3(int i, int j, int q, int t, struct pmf *p,
+double matrix_prob3(int i, int j, int q, struct pmf *p,
 		    struct pmf *u)
 {
     int n = 0, k = 0;
     double prob = 0, pv;
-    /*if ((i==0)&&(j==0)){
-       //ok
-       prob=cdf_get(p,q);
-       }
-       else *//*if ((i==0)&&(j>0)){
-       //ok
-       prob=cdf_get(p,q*(j+1))-cdf_get(p,(j)*q);
-       }
-       else *//*  if (i==0)
-       //{
-       //seems to be ok
-       for (k = 0; k < u->size; k++) {
-       n=(k - u->offset);
-       pv=u->elems[k];
-       if (pv > 0)
-       {
-       printf("(%i,%i),n=%i prob=%f\n",i,j,n,pv);
-       if (i>=n){ */
-    //         prob += (cdf_get(p,(j+1) * q)-cdf_get(p,(j) * q));
-    /* }
-       else {
-       prob +=  pv*(cdf_get(p, q)) ;
-       }
-       }
-       }
-       }
-       else */  {
-	for (k = 0; k < u->size; k++) {
-	    n = (k - u->offset);
-	    pv = u->elems[k];
-	    if (i >= n) {
-		prob +=
-		    pv *
-		    ((cdf_get(p, (n - i + j) * q) -
-		      cdf_get(p, (n - i + j - 1) * q)));
-	    } else {
-		prob +=
-		    pv *
-		    ((cdf_get(p, (j + 1) * q) - (cdf_get(p, (j) * q))));
-	    }
+    for (k = 0; k < u->size; k++) {
+      n = (k - u->offset);
+      pv = u->elems[k];
+      if (i >= n) {
+        prob +=pv * ((cdf_get(p, (n - i + j) * q) -
+                  cdf_get(p, (n - i + j - 1) * q)));
+      } else {
+	prob +=pv * ((cdf_get(p, (j + 1) * q) -
+	             (cdf_get(p, (j) * q))));
 	}
     }
     return prob;
-
-
-
 }
+
+double matrix_prob_ts(int i, int j, int q, struct pmf *p,
+		    struct pmf *u)
+{
+
+  int z = 0, h = 0;
+  int k=pmf_min(u);
+  double prob = 0, pv;
+  for (h = 0; h < u->size; h++) {
+    z = (h - u->offset);
+    pv = u->elems[h];
+    if (pv>0)
+       if (i+1-z>0)
+	  prob+=pv*(cdf_get(p,(j-i+z)*q)-cdf_get(p,(j-i+z-1)*q));
+       else
+	  prob+=pv*(cdf_get(p,(j+1)*q)-cdf_get(p,(j)*q));
+  }
+  return prob;
+}
+
+double matrix_prob4(int i, int j, int q, struct pmf *p,
+		    struct pmf *u)
+{
+  int z = 0, h = 0;
+  int k=pmf_min(u);
+  double prob = 0, pv;
+  if (j==0)
+  for (h = 0; h < u->size; h++) {
+    z = (h - u->offset);
+    pv = u->elems[h];
+    if (pv>0)
+    if (z>=k+i)
+	prob += pv * cdf_get(p, k*q);
+    else
+        prob += pv * cdf_get(p, (z-i)*q);
+    }
+  else
+  for (h = 0; h < u->size; h++) {
+    z = (h - u->offset);
+    pv = u->elems[h];
+    if (pv>0)
+    if (k+i-z<0) {
+      prob +=pv * ((cdf_get(p, (k + j) * q) -
+                  cdf_get(p, (k + j - 1) * q)));
+    } else {
+      prob +=pv * ((cdf_get(p, (j + z - i) * q) -
+                  (cdf_get(p, (j + z - i - 1) * q))));
+      }
+    }
+    return prob;
+}
+
 
 void compute_matrixes(MAT * mat, int dim, MAT * B, MAT * A0,
 		      MAT * A1, MAT * A2)
