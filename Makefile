@@ -13,6 +13,7 @@ matrix: matrix.o pmf.o pmf-file.o cdf.o qbdm.o meschac/meschach.a
 pmfgen: pmfgen.o pmf.o
 stoch: stoch.o pmf.o pmf-file.o driver.o pseudo.o generic.o
 pmf-iz-transform: pmf-iz-transform.o pmf.o pmf-file.o generic.o
+pmf2cdf: pmf2cdf.o pmf.o pmf-file.o cdf.o
 
 meschac/meschach.a:
 	make -C meschac
