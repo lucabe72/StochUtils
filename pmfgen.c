@@ -246,6 +246,7 @@ int main(int argc, char *argv[])
 #else
   pmf_rnd(p, offs, size, samples);
 #endif
+
   if (pmf_check(p)) {
     printf("Bad PMF: %d | %f!!!\n", pmf_check(p), pmf_sum(p, 0));
 
