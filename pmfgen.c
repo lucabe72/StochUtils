@@ -33,7 +33,7 @@ static int distro = 0;
 static double par1 = 0;
 static double par2 = 0;
 
-void help()
+void help(void)
 {
   printf("Usage:\n");
   printf("./pmfgen <opts>\n\n");
