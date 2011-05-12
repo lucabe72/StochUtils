@@ -16,6 +16,20 @@ double pmf_avg(const struct pmf *p)
   return avg;
 }
 
+void pmf_shift(struct pmf *p, int start)
+{
+  int i;
+  if (pmf_min(p) > start) {
+
+  } else {
+    for (i = pmf_max(p); i > 0; i--)
+      pmf_set(p, i + start - pmf_min(p), pmf_get(p, i));
+    for (i = 0; i <= start; i++)
+      pmf_set(p, i, 0.0);
+  }
+}
+
+
 struct pmf *pmf_create(unsigned int size, unsigned int offs)
 {
   struct pmf *res;

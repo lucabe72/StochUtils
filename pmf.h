@@ -17,6 +17,7 @@ int pmf_set(struct pmf *d, int val, double p);
 int pmf_set_samples(struct pmf *d, int samples);
 double pmf_sum(const struct pmf *d, unsigned int i);
 int pmf_check(const struct pmf *d);
+void pmf_shift(struct pmf *p, int offs);
 
 static inline double pmf_get(const struct pmf *d, int i)
 {
