@@ -1,8 +1,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef GSL
 #include <stdarg.h>
 #include <gsl/gsl_randist.h>
+#endif
 
 #include "pmf.h"
 #include "pmf-sample.h"
@@ -21,8 +23,8 @@
 #define LANDAU		10
 #define LOGNORMAL	11
 
-static int MIN_DIS = (-100);
-static int MAX_DIS = 100;
+#define MIN_DIS (-100)
+#define MAX_DIS 100
 
 static int offs = 100;
 static int size = 500;
@@ -59,6 +61,7 @@ void help(void)
 
 }
 
+#ifdef GSL
 static double gen_number(int value, int distro, va_list ap)
 {
   double val = 0.0;
@@ -160,6 +163,30 @@ static void pmf_gen(struct pmf *p, int offs, int distro, ...)
   va_end(ap);
 }
 
+#else
+
+static void pmf_rnd(struct pmf *p, int offs, int size, int samples)
+{
+  int i;
+  double sum = 0;
+
+  for (i = offs; i < offs + size; i++) {
+    unsigned long long int val;
+
+    val = rand();
+    val = (val* samples) / RAND_MAX;
+
+    pmf_set(p, i, val);
+    sum += val;
+  }
+
+  for (i = offs; i < offs + size; i++) {
+    pmf_set(p, i, pmf_get(p, i) / sum);
+  }
+}
+
+#endif
+
 static int opts_parse(int argc, char *argv[])
 {
   int opt;
@@ -214,7 +241,11 @@ int main(int argc, char *argv[])
     srand(seed);
   }
   p = pmf_create(size + offs, 0);
+#ifdef GSL
   pmf_gen(p, offs, distro, par1, par2, NULL);
+#else
+  pmf_rnd(p, offs, size, samples);
+#endif
   if (pmf_check(p)) {
     printf("Bad PMF: %d | %f!!!\n", pmf_check(p), pmf_sum(p, 0));
 
