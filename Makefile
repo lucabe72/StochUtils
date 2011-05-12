@@ -12,7 +12,7 @@ pmf-rnd: pmf-rnd.o pmf.o pmf-file.o pmf-sample.o
 matrix: matrix.o pmf.o pmf-file.o cdf.o qbdm.o meschac/meschach.a
 pmfgen: pmfgen.o pmf.o pmf-sample.o pmf-modify.o
 ifdef GSL
-pmfgen: LDFLAGS += -lgsl
+pmfgen: LDFLAGS += `pkg-config --libs gsl` 
 pmfgen.o: CPPFLAGS += -DGSL
 endif
 stoch: stoch.o pmf.o pmf-file.o driver.o pseudo.o generic.o
