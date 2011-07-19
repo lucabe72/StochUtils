@@ -107,6 +107,11 @@ printf("OI: %d\n", optind);
       printf("%d\t %f\n", i, pmf_get(res, i));
     }
   }
+  for (i = pmf_max(res) + 1; i < pmf_max(p) + 1; i++) {
+    sum += pmf_get(p, i);
+  }
+  fprintf(stderr, "#Max: %d\n", pmf_max(res));
+  fprintf(stderr, "P{x > %d} <= %1.20f   (= %1.20f)\n", pmf_max(res), 1.0 / max, sum);
 
   return 0;
 }
