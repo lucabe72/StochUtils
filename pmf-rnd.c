@@ -38,25 +38,42 @@ int pmf_rnd(const struct pmf *c)
   return --res;
 }
 
+static int opts_parse(int argc, char *argv[])
+{
+  int opt;
+
+  while ((opt = getopt(argc, argv, "s:m:")) != -1) {
+    switch (opt) {
+      case 'm':
+        max = atoi(optarg);
+      case 's':
+        rnd_init(atoi(optarg));
+        break;
+      default: /* ’?’ */
+        fprintf(stderr, "Wrong parameter %c\n", opt);
+        exit(EXIT_FAILURE);
+     }
+  }
+
+  return optind;
+}
+
 int main(int argc, char *argv[])
 {
   FILE *f;
   struct pmf *p, *res;
-  int n, i;
+  int n, i, optind;
   const double epsilon =  1e-10;
+  double sum = 0;
 
-  if (argc < 2) {
+  optind = opts_parse(argc, argv);
+printf("OI: %d\n", optind);
+  if (argc - optind < 1) {
     fprintf(stderr, "Usage: %s <PMF>\n", argv[0]);
 
     return -1;
   }
-  if (argc > 2) {
-    max = atoi(argv[2]);
-    if (argc > 3) {
-      rnd_init(atoi(argv[3]));
-    }
-  }
-  f = fopen(argv[1], "r");
+  f = fopen(argv[optind], "r");
   if (!f) {
     perror("FOpen");
 
