@@ -9,6 +9,7 @@
 #define N 500000
 
 static int max = 1000;
+static int eps_c1;
 
 double rnd(void)
 {
@@ -43,10 +44,14 @@ static int opts_parse(int argc, char *argv[])
 {
   int opt;
 
-  while ((opt = getopt(argc, argv, "s:m:")) != -1) {
+  while ((opt = getopt(argc, argv, "s:m:e:")) != -1) {
     switch (opt) {
+      case 'e':
+	eps_c1 = atoi(optarg);
+        break;
       case 'm':
         max = atoi(optarg);
+        break;
       case 's':
         rnd_init(atoi(optarg));
         break;
@@ -90,7 +95,13 @@ printf("OI: %d\n", optind);
     return -1;
   }
   for (i = 0; i < pmf_max(p) + 1; i++) {
-    fprintf(stderr, "P{x = %d} = %f\n", i, pmf_get(p, i));
+    if (pmf_get(p, i) > epsilon) {
+      if (eps_c1) {
+fprintf(stderr, "%f -> %f\n",  pmf_get(p, i), pmf_get(p, i) * ((double)(eps_c1 - 1) / (double)eps_c1));
+        pmf_set(p, i, pmf_get(p, i) * ((double)(eps_c1 - 1) / (double)eps_c1));
+      }
+      fprintf(stderr, "P{x = %d} = %f\n", i, pmf_get(p, i));
+    }
   }
 
   res = pmf_create(pmf_max(p) + 1, 0);
