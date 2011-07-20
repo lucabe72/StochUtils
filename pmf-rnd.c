@@ -102,6 +102,11 @@ int main(int argc, char *argv[])
       fprintf(stderr, "P{x = %d} = %f\n", i, pmf_get(p, i));
     }
   }
+  fprintf(stderr, "PMF Check[1]: %d\n", pmf_check(p));
+  if (eps_c1) {
+    p->tail = 1.0 / (double)eps_c1;
+  }
+  fprintf(stderr, "PMF Check[2]: %d\n", pmf_check(p));
 
   res = pmf_create(pmf_max(p) + 1, 0);
   for (i = 0; i < max; i++) {
