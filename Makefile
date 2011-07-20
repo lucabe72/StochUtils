@@ -1,4 +1,5 @@
-CFLAGS = -Wall -Wextra -g -O8
+CFLAGS = -Wall -Wextra -g
+CFLAGS += -O8
 LDLIBS = -lm
 
 all: meschac avg pmftest pmf-y pmf-yt pmf-rnd matrix pmfgen stoch pmf-iz-transform
