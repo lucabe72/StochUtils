@@ -73,7 +73,6 @@ int main(int argc, char *argv[])
   double sum = 0;
 
   optind = opts_parse(argc, argv);
-printf("OI: %d\n", optind);
   if (argc - optind < 1) {
     fprintf(stderr, "Usage: %s <PMF>\n", argv[0]);
 
