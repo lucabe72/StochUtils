@@ -44,6 +44,12 @@ struct pmf *pmf_create(unsigned int size, unsigned int offs)
   return res;
 }
 
+void pmf_free(struct pmf *p)
+{
+  free(p->elems);
+  free(p);
+}
+
 int pmf_set(struct pmf *d, int val, double p)
 {
   if (val > (int)d->size - (int)d->offset) {

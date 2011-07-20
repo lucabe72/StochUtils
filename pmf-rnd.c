@@ -123,6 +123,9 @@ int main(int argc, char *argv[])
   fprintf(stderr, "#Max: %d\n", pmf_max(res));
   fprintf(stderr, "P{x > %d} <= %1.20f   (= %1.20f)\n", pmf_max(res), 1.0 / max, sum);
 
+  pmf_free(p);
+  pmf_free(res);
+
   return 0;
 }
 
