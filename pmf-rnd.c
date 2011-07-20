@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
   for (i = 0; i < pmf_max(p) + 1; i++) {
     if (pmf_get(p, i) > epsilon) {
       if (eps_c1) {
-fprintf(stderr, "%f -> %f\n",  pmf_get(p, i), pmf_get(p, i) * ((double)(eps_c1 - 1) / (double)eps_c1));
+        /* fprintf(stderr, "%f -> %f\n",  pmf_get(p, i), pmf_get(p, i) * ((double)(eps_c1 - 1) / (double)eps_c1)); */
         pmf_set(p, i, pmf_get(p, i) * ((double)(eps_c1 - 1) / (double)eps_c1));
       }
       fprintf(stderr, "P{x = %d} = %f\n", i, pmf_get(p, i));
