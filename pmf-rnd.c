@@ -33,7 +33,7 @@ int pmf_rnd(const struct pmf *c)
   v = rnd();
 
   res = 0;
-  while (v > 0) {
+  while ((v > 0) && res < pmf_max(c)) {
     v -= pmf_get(c, res++);
   }
 
