@@ -9,7 +9,7 @@
 #define N 500000
 
 static int max = 1000;
-static int eps_c1;
+static unsigned long long int eps_c1;
 
 double rnd(void)
 {
@@ -37,7 +37,23 @@ int pmf_rnd(const struct pmf *c)
     v -= pmf_get(c, res++);
   }
 
+  if (v > 0) {
+    return N - 1;
+  }
+
   return --res;
+}
+
+static long long unsigned int e(int n)
+{
+  long long unsigned int res = 1;
+  int i;
+
+  for (i = 0; i < n; i++) {
+    res *= 10ULL;
+  }
+
+  return res;
 }
 
 static int opts_parse(int argc, char *argv[])
@@ -47,7 +63,7 @@ static int opts_parse(int argc, char *argv[])
   while ((opt = getopt(argc, argv, "s:m:e:")) != -1) {
     switch (opt) {
       case 'e':
-	eps_c1 = atoi(optarg);
+	eps_c1 = e(atoi(optarg));
         break;
       case 'm':
         max = atoi(optarg);
@@ -70,7 +86,7 @@ int main(int argc, char *argv[])
   struct pmf *p, *res;
   int n, i, optind;
   const double epsilon =  1e-10;
-  double sum = 0;
+  double sum;
 
   optind = opts_parse(argc, argv);
   if (argc - optind < 1) {
@@ -108,7 +124,7 @@ int main(int argc, char *argv[])
   }
   fprintf(stderr, "PMF Check[2]: %d\n", pmf_check(p));
 
-  res = pmf_create(pmf_max(p) + 1, 0);
+  res = pmf_create(/*pmf_max(p) + 1*/ N, 0);
   for (i = 0; i < max; i++) {
     int val;
 
@@ -122,11 +138,12 @@ int main(int argc, char *argv[])
       printf("%d\t %f\n", i, pmf_get(res, i));
     }
   }
+  sum = p->tail;
   for (i = pmf_max(res) + 1; i < pmf_max(p) + 1; i++) {
     sum += pmf_get(p, i);
   }
   fprintf(stderr, "#Max: %d\n", pmf_max(res));
-  fprintf(stderr, "P{x > %d} <= %1.20f   (= %1.20f)\n", pmf_max(res), 1.0 / max, sum);
+  fprintf(stderr, "P{x > %d} <= %1.20f   (= %1.20f)\n", pmf_max(p), 1.0 / max, sum);
 
   pmf_free(p);
   pmf_free(res);
