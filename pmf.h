@@ -12,6 +12,7 @@ struct pmf {
 };
 
 double pmf_avg(const struct pmf *p);
+double pmf_std(const struct pmf *p);
 struct pmf *pmf_create(unsigned int size, unsigned int offs);
 void pmf_free(struct pmf *p);
 int pmf_set(struct pmf *d, int val, double p);
