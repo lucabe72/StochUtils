@@ -138,12 +138,16 @@ int main(int argc, char *argv[])
       printf("%d\t %f\n", i, pmf_get(res, i));
     }
   }
-  sum = p->tail;
+  if (pmf_max(res) <= pmf_max(p)) {
+    sum = p->tail;
+  } else {
+    sum = 0;
+  }
   for (i = pmf_max(res) + 1; i < pmf_max(p) + 1; i++) {
     sum += pmf_get(p, i);
   }
   fprintf(stderr, "#Max: %d\n", pmf_max(res));
-  fprintf(stderr, "P{x > %d} <= %1.20f   (= %1.20f)\n", pmf_max(p), 1.0 / max, sum);
+  fprintf(stderr, "P{x > %d} <= %1.20f   (= %1.20f)\n", pmf_max(res), 1.0 / max, sum);
 
   pmf_free(p);
   pmf_free(res);
