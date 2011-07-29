@@ -13,6 +13,7 @@ struct pmf {
 
 double pmf_avg(const struct pmf *p);
 struct pmf *pmf_create(unsigned int size, unsigned int offs);
+void pmf_free(struct pmf *p);
 int pmf_set(struct pmf *d, int val, double p);
 int pmf_set_samples(struct pmf *d, int samples);
 double pmf_sum(const struct pmf *d, unsigned int i);

@@ -25,8 +25,10 @@ double matrix_prob(int i, int j, int n, int q, struct pmf *p)
 
 double matrix_prob2(int i, int j, int q, struct pmf *p, struct pmf *u)
 {
-    int n = 0, k = 0;
+    int n = 0;
+    unsigned int k = 0;
     double prob = 0;
+
     if (j == 0) {
 	for (k = 0; k < u->size; k++) {
 	    n = (k - u->offset);
@@ -57,7 +59,8 @@ double matrix_prob2(int i, int j, int q, struct pmf *p, struct pmf *u)
 double matrix_prob3(int i, int j, int q, struct pmf *p,
 		    struct pmf *u)
 {
-    int n = 0, k = 0;
+    int n = 0;
+    unsigned int k = 0;
     double prob = 0, pv;
     for (k = 0; k < u->size; k++) {
       n = (k - u->offset);
