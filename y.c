@@ -61,9 +61,11 @@ struct pmf *compute(const struct pmf *c, const struct pmf *z, int q)
     }
     sum += py;
   }
-printf("Max{c} = %d\n",  pmf_max(c));
+#if 0
+  printf("Max{c} = %d\n",  pmf_max(c));
   printf("Sum: %f; Ymax = %d; espilon = %f < %f\n", sum, pmf_max(c) - pmf_max(z) * q, 1 - sum, 
   pmf_max(c) * epsilon(c, pmf_max(c)));
+#endif
   if (1.0 - sum > 1e-10) {
     y->tail = 1.0 - sum;
   }
@@ -71,7 +73,9 @@ printf("Max{c} = %d\n",  pmf_max(c));
     printf("Bad PMF: %d | %f!!!\n", pmf_check(y), pmf_sum(y, 0));
   }
 
+#if 0
   printf("min{Y}: %d\tmax{Y}: %d\t Ymax: %d\n", pmf_min(y), pmf_max(y), ymax);
+#endif
 
   return y;
 }
