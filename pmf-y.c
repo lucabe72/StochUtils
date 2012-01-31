@@ -114,6 +114,17 @@ int main(int argc, char *argv[])
   if (samples) pmf_set_samples(c, samples);
   print(c, Nc, 0, 'c');
 
+  if (pmf_avg(c) / pmf_avg(z) > Q) {
+    int i;
+
+    printf("Qs = %d < %f / %f = %f\n", Q, pmf_avg(c), pmf_avg(z), pmf_avg(c) / pmf_avg(z));
+    for (i = 1; i < T / Q; i++) {
+      printf("P{d = %d} = 0\n", P * i);
+    }
+
+    return 0;
+  }
+
   t1 = get_time();
   y = compute(c, z, Q);
   t3 = get_time();
