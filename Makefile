@@ -2,7 +2,7 @@ CFLAGS = -Wall -Wextra -g
 CFLAGS += -O8
 LDLIBS = -lm
 
-all: meschac avg pmftest pmf-y pmf-yt pmf-rnd matrix pmfgen stoch pmf-iz-transform
+all: meschac avg pmftest pmf-y pmf-yt pmf-rnd matrix pmfgen stoch pmf-iz-transform anderson matgen matsem solver closed
 
 avg: avg.o pmf.o pmf-file.o gamma.o y.o
 avg-c1: avg-c1.o pmf.o pmf-file.o
@@ -20,7 +20,13 @@ stoch: stoch.o pmf.o pmf-file.o driver.o pseudo.o generic.o
 pmf-iz-transform: pmf-iz-transform.o pmf.o pmf-file.o generic.o
 pmf2cdf: pmf2cdf.o pmf.o pmf-file.o cdf.o
 
+solver: solver.o pmf.o y.o gamma.o qbdm.o meschac/meschach.a
+closed: closed.o pmf.o y.o gamma.o qbdm.o meschac/meschach.a
+matgen: matgen.o models.o pmf.o pmf-file.o cdf.o meschac/meschach.a
+matsem: matsem.o meschac/meschach.a
+anderson: anderson.o pmf.o pmf-file.o
+
 meschac/meschach.a:
 	make -C meschac
 clean:
-	rm -f *.o avg avg-c1 pmftest pmf-y pmf-yt pmf-rnd matrix stoch pmf-iz-transform meschach.a
+	rm -f *.o avg avg-c1 pmftest pmf-y pmf-yt pmf-rnd matrix stoch pmf-iz-transform anderson matgen matsem solver closed meschach.a

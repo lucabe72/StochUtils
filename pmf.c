@@ -17,8 +17,14 @@ double pmf_avg(const struct pmf *p)
   return avg;
 }
 
-
 double pmf_std(const struct pmf *p)
+{
+  double var = pmf_var(p);
+
+  return sqrt(var);
+}
+
+double pmf_var(const struct pmf *p)
 {
    unsigned int i;
    double var = 0;
@@ -28,7 +34,7 @@ double pmf_std(const struct pmf *p)
     var += (pow(((i - p->offset)-avg),2) * p->elems[i]);
   }
 
-  return sqrt(var);  
+  return var;
 }
 
 struct pmf *pmf_create(unsigned int size, unsigned int offs)
