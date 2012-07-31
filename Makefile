@@ -31,4 +31,6 @@ anderson: anderson.o pmf.o pmf-file.o
 meschac/meschach.a:
 	make -C meschac
 clean:
-	rm -f *.o $(APPS) meschach.a
+	rm -f *.o
+	rm -f $(APPS)
+	make -C meschac cleanup
