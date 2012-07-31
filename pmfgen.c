@@ -175,7 +175,6 @@ static void pmf_rnd(struct pmf *p, int offs, int size, int samples)
 
     val = rand();
     val = (val* samples) / RAND_MAX;
-
     pmf_set(p, i, val);
     sum += val;
   }

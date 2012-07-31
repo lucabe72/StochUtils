@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 
 #include "pmf.h"
 
@@ -14,6 +15,20 @@ double pmf_avg(const struct pmf *p)
   }
 
   return avg;
+}
+
+
+double pmf_std(const struct pmf *p)
+{
+   unsigned int i;
+   double var = 0;
+   double avg = pmf_avg(p);
+
+  for (i = 0; i < p->size; i++) {
+    var += (pow(((i - p->offset)-avg),2) * p->elems[i]);
+  }
+
+  return sqrt(var);  
 }
 
 struct pmf *pmf_create(unsigned int size, unsigned int offs)

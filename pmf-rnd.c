@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "pmf.h"
 #include "pmf-file.h"
@@ -148,6 +149,12 @@ int main(int argc, char *argv[])
   }
   fprintf(stderr, "#Max: %d\n", pmf_max(res));
   fprintf(stderr, "P{x > %d} <= %1.20f   (= %1.20f)\n", pmf_max(res), 1.0 / max, sum);
+
+  double eps=(pmf_avg(res)+(pmf_std(res) / sqrt(max))*3)/(pmf_max(res));  
+  fprintf(stderr, "P{x > %d} <= %1.20f \n",pmf_max(p) ,eps);
+  int rep=pow(((pmf_std(res)*3) / (eps*pmf_max(res)-pmf_avg(res))),2);
+  fprintf(stderr, "n = %i \n",rep);
+
 
   pmf_free(p);
   pmf_free(res);
