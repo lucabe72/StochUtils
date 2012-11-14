@@ -8,6 +8,7 @@ all: $(APPS)
 
 avg: avg.o pmf.o pmf-file.o gamma.o y.o
 avg-c1: avg-c1.o pmf.o pmf-file.o
+resample: resample.o pmf.o pmf-file.o
 pmftest: pmftest.o pmf.o pmf-file.o
 pmf-y: pmf-y.o pmf.o pmf-file.o gamma.o y.o v.o pmf-modify.o dl.o
 pmf-yt: pmf-yt.o pmf.o pmf-file.o gamma.o z.o y.o v.o pmf-modify.o dl.o
@@ -27,6 +28,10 @@ closed: closed.o pmf.o y.o gamma.o qbdm.o meschac/meschach.a
 matgen: matgen.o models.o pmf.o pmf-file.o cdf.o meschac/meschach.a
 matsem: matsem.o meschac/meschach.a
 anderson: anderson.o pmf.o pmf-file.o
+#companion: LDLIBS += `pkg-config --libs gsl`
+companion: LDFLAGS += -L/usr/lib/atlas-base/atlas
+companion: LDLIBS += -lgsl -lcblas -latlas -lm
+companion: companion.o pmf.o pmf-file.o
 
 meschac/meschach.a:
 	make -C meschac
