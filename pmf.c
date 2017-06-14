@@ -3,7 +3,7 @@
 
 #include "pmf.h"
 
-const double epsilon = 1e-10;
+const double epsilon = 1e-6;
 
 double pmf_avg(const struct pmf *p)
 {

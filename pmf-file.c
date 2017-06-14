@@ -12,7 +12,7 @@ int pmf_read(struct pmf *d, FILE *f)
     unsigned int i;
     double p;
 
-    res = fscanf(f, "%u\t%lf\n", &i, &p);
+    res = fscanf(f, "%u %lf\n", &i, &p);
     if (res == 2) {
       if (pmf_set(d, i, p) < 0) {
         fprintf(stderr, "Failed to insert %u: PMF(%u)=%f\n", cnt, i, p);

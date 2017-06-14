@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
     printf("P{x = %d} = %f\n", i, pmf_get(p, i));
   }
   printf("P{x >= %d} = %f\n", N, pmf_tail(p));
+  printf("%d samples\n", n);
 
   return 0;
 }

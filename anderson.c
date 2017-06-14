@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdint.h>
+#include <inttypes.h>
 #include <time.h>
 #include <sys/time.h>
 
@@ -100,6 +100,7 @@ int main(int argc, char *argv[])
     printf("((%f/(2*%d*(%d-%f)*(1-0.5))+3)*%d\n",var,Q,Q,avg,T);
     printf("%f\n",var/((2*Q*(Q-avg))+3)*T); 
     time_end = get_time();
-    
+    printf("Time: %"PRIu64"\n", time_end - time_start);
+
     return (0);
 }

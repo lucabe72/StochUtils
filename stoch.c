@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdint.h>
+#include <inttypes.h>
 
 #include "pmf.h"
 #include "pmf-file.h"
@@ -93,11 +93,11 @@ int main(int argc, char *argv[])
     t = pdf_load(argv[opt + 1], pmf_size * ts);
   }
   t1 = get_time();
-  if (p > 0) {
+  if (p <= 0) {
 //    printf("P: %d\n", p);
-    m = matrix_generate_pseudo(c, p, qs, ts);
-  } else {
     m = matrix_generate_generic(c, t, qs, ts);
+  } else {
+    m = matrix_generate_pseudo(c, p, qs, ts);
   }
   if (m == NULL) {
     fprintf(stderr, "Cannot generate matrix!\n");
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
       printf("P{d = %d} = %f | %f\n", i, dl[i], sum);
     }
   }
-  printf("Ctime: %Lu\n", t2 - t1);
+  printf("Ctime: %"PRIu64"\n", t2 - t1);
 
   free(dl);
 

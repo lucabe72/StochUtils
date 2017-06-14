@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdint.h>
+#include <inttypes.h>
 
 #include "pmf.h"
 #include "y.h"
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
 //  print(gamma_pmf, T, 0, 'g');
   print(v, T, 0, 'v');
   print(dl, T / Q * P, 0, 'd');
-  printf("Ctime: %Lu\n", t2 - t1);
+  printf("Ctime: %"PRIu64"\n", t2 - t1);
 
   return 0;
 }

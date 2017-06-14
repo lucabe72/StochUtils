@@ -30,7 +30,11 @@ int main(int argc, char *argv[])
   t = pmf_create(N * ts, 0);
   n = pmf_read(t, f);
 
+  if (n != 1) {
+    printf("PMF Load failed!\n");
 
+    return -1;
+  }
   if (pmf_check(t)) {
     printf("Bad PMF: %d | %f!!!\n", pmf_check(t), pmf_sum(t, 0));
 

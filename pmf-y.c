@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdint.h>
+#include <inttypes.h>
 
 #include "pmf.h"
 #include "y.h"
@@ -50,7 +50,7 @@ static struct pmf *load(const char *fname, int n)
   fclose(f);
 
   if (pmf_check(p)) {
-    printf("Bad PMF: %d | %f!!!\n", pmf_check(p), pmf_sum(p, 0));
+    printf("Bad PMF(%d): %d | %f!!!\n", n, pmf_check(p), pmf_sum(p, 0));
 
     exit(-1);
   }
@@ -105,7 +105,9 @@ int main(int argc, char *argv[])
   int opt;
 
   opt = opts_parse(argc, argv);
+  printf("#Loading %s\n", argv[opt]);
   c = load(argv[opt], Nc);
+  printf("#Loading %s\n", argv[opt + 1]);
   z = load(argv[opt + 1], Nz);
 
   print(z, Nz, 0, 'z');
@@ -145,8 +147,8 @@ int main(int argc, char *argv[])
 //  print(gamma_pmf, T, 0, 'g');
   print(v, T, 0, 'v');
   print(dl, pmf_max(v) / Q * P, 0, 'd');
-  printf("Ctime: %Lu\n", t2 - t1);
-  printf("Ctime: %Lu %Lu\n", t3 - t1, t2 - t3);
+  printf("Ctime: %"PRIu64"\n", t2 - t1);
+  printf("Ctime: %"PRIu64" %"PRIu64"\n", t3 - t1, t2 - t3);
 
   return 0;
 }

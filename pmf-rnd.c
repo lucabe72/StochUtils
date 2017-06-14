@@ -110,6 +110,7 @@ int main(int argc, char *argv[])
 
     return -1;
   }
+  printf("Read %d samples\n", n);
   for (i = 0; i < pmf_max(p) + 1; i++) {
     if (pmf_get(p, i) > epsilon) {
       if (eps_c1) {
