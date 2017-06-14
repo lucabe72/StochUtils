@@ -2,7 +2,8 @@ CFLAGS = -Wall -Wextra -g
 CFLAGS += -O8
 LDLIBS = -lm
 
-APPS = avg pmftest pmf-y pmf-yt pmf-rnd matrix pmfgen stoch pmf-iz-transform anderson matgen matsem solver closed
+APPS = avg pmftest pmf-y pmf-yt pmf-rnd pmfgen stoch pmf-iz-transform anderson
+#APPS += matrix solver closed matgen matsem
 
 all: $(APPS)
 
